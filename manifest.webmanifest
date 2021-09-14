@@ -1,0 +1,24 @@
+{
+  "name": "Wizard for PWA",
+  "short_name": "Wizard",
+  "start_url": "http://localhost/",
+  "description": "Wizard to learn how to implement your own PWA",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "img/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "img/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ]
+}

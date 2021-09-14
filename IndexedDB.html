@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA3 - IndexedDB</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link active">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>IndexedDB</h1>
+      Daten, die vom Nutzer hinzugefügt werden, während keine Internetverbindung besteht, können nicht wie die anderen Assets
+      im Cache zwischengespeichert werden.
+      Die Lösung ist die Verwendung einer IndexedDB.
+      Diese speichert <i><b>POST</b></i>-Request so lange ab, bis wieder eine Internetverbindung besteht.
+      <br>
+      <br>
+      Für die Verwendung von IndexedDB muss die externe JavaScript-Datei (app.js) erweitert werden.
+      Eine IndexedDB besteht aus mehreren <i><b>ObjectStores</b></i>, die wiederum Tabellen beinhalten,
+      in denen dann die Daten gespeichert werden.
+      <br>
+      <br>
+      Also muss als erstes eine <i><b>initIndexedDB</b></i>-Methode erstellt werden, die die IndexedDB und die
+      dazugehörigen <i><b>ObjectStores</b></i> initialisiert.
+      <i><b>onupgradeneeded</b></i> wird nur dann aufgerufen, wenn die Datenbank noch nicht existiert
+        oder die Versionsnummer sich ändert.
+
+      <pre><code class="language-javascript">
+function initIndexedDB() {
+    let idb = window.indexedDB.open("people", 1);
+    idb.onupgradeneeded = event => {
+        let db = event.target.result;
+        db.createObjectStore("addPeople", {autoIncrement: true});
+        db.createObjectStore("editPeople", {autoIncrement: true});
+        db.createObjectStore("deletePeople", {autoIncrement: true});
+    };
+}
+        </code></pre>
+      <br>
+
+      Für jede Funktion, die offline durchgeführt werden kann, muss ein eigener <i><b>ObjectStore</b></i> erstellt werden.
+      <br>
+      <br>
+      Die Funktionsweise der IndexedDB wird nun am Beispiel des Hinzufügens erklärt.
+      <br>
+      <br>
+      Der Ablauf beim Editieren und Löschen ist gleich, lediglich einige Abschnitte von Funktionen unterscheiden
+      sich teilweise voneinander.
+      Der <i><b>EventListener("click")</b></i> reagiert als aller erstes auf den Klick des "Save"-Buttons der View.
+      Wurden nun also Personendaten eingetragen, so werden diese als erstes mit Hilfe der <i><b>checkAddInput</b></i>-Methode validiert.
+      Das ist eine neu hinzugefügte Funktion, die die Validierung über JavaScript übernimmt, da diese offline nicht über PHP möglich ist.
+      <br>
+      Ist die Validierung erfolgreich, so werden die gesetzten Werte in die <i><b>person</b></i>-Variable geschrieben.
+      <br>
+      <br>
+      Ist der Nutzer beim Hinzufügen der Person(en) online, so greift die <i><b>if</b></i>-Abfrage.
+      Die dabei erhaltenen Informationen werden dann in ein Array geschrieben und mit dem Aufruf der <i><b>addPeopleToSQL</b></i>-Funktion
+      an diese übergeben.
+
+      <pre><code class="language-javascript">
+if (document.getElementById("add-button") !== null) {
+    document.getElementById("add-button").addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        if (checkAddInput()) {
+            let person = {
+                "new-prename": document.getElementById("new-prename").value,
+                "new-surname": document.getElementById("new-surname").value,
+                ...
+            };
+            document.cookie = "success=Person added.; path=/"
+
+            if (navigator.onLine) {
+                let peopleArray = new Array(person);
+                addPeopleToSQL(peopleArray);
+                window.location.href = "http://localhost/people";
+            } else {
+                Object.assign(person,
+                    {
+                        "offline": "&lti class='bi bi-plus-lg'&gt&lt/i&gt",
+                        "fullname": person["new-prename"] + " " + person["new-surname"],
+                        "street": person["new-street"],
+                        "address": person["new-postcode"] + " " + person["new-city"],
+                    });
+                addToAddPeopleIDB(person)
+                    .then(() => {
+                        window.location.href = "http://localhost/people";
+                    })
+                    .catch(error => {
+                        console.log("Error adding person to addPeopleIDB", error);
+                    })
+            }
+
+        }
+    })
+}
+        </code></pre>
+      <br>
+
+      Ist der Nutzer offline, so wird der <i><b>else</b></i>-Abschnitt ausgeführt.
+      In diesem Abschnitt wird als erstes das <i><b>Object</b></i> um die eingegebenen Informationen erweitert.
+      Neben den eingegebenen Informationen wird ebenfalls ein "plus"-Symbol hinzugefügt, welches dem Benutzer offline
+      die ausgeführte Operation in der Tabelle anzeigt.
+      Als letztes wird die <i><b>addToAddPeopleIDB</b></i>-Methode aufgerufen und die <i><b>person</b></i>-Variable mit übergeben.
+      Ist das erfolgreich, so wird der Nutzer auf die Tabelle navigiert, wenn nicht, wird eine Fehlermeldung in der Konsole erzeugt.
+      <br>
+      <br>
+      Die <i><b>checkAddInput</b></i>-Funktion überprüft die Nutzereingaben und validiert diese.
+      Erfüllen alle Angaben zur Person die Anforderungen, so wird <i><b>true</b></i> zurückgegeben, tun diese es nicht,
+      dann wird <i><b>false</b></i> zurückgegeben und die Fehlermeldung angezeigt.
+
+      <pre><code class="language-javascript">
+function checkAddInput() {
+    let numbers = /^[0-9]+$/;
+    if (document.getElementById("new-prename").value === "" ||
+        document.getElementById("new-surname").value === "") {
+        document.getElementById("error-new-prename").innerHTML = null;
+        document.getElementById("error-new-surname").innerHTML = null;
+        ...
+        if (document.getElementById("new-prename").value === "") {
+            document.getElementById("error-new-prename").innerHTML = "&ltdiv class='alert alert-danger' role='alert'&gtA prename is required.&lt/div&gt";
+        }
+
+        if (document.getElementById("new-surname").value === "") {
+            document.getElementById("error-new-surname").innerHTML = "&ltdiv class='alert alert-danger' role='alert'&gtA surname is required.&lt/div&gt";
+        }
+        ...
+        return false;
+    } else {
+        return true;
+    }
+}
+        </code></pre>
+      <br>
+
+      Die <i><b>addPeopleToSQL</b></i>-Funktion wird aufgerufen, wenn der Nutzer eine Person online hinzufügt.
+      Des Weiteren wird sie in der <i><b>if(navigator.onLine)</b></i>-Abfrage aufgerufen, um Personen,
+      die offline hinzugefügt wurden, aus der <i><b>indexedDB</b></i> in die SQL-Datenbank zu schreiben.
+      <br>
+      <br>
+      Die <i><b>addPeopleToSQL</b></i>-Funktion erhält den <i><b>people</b></i>-Parameter, verarbeitet die erhaltenen Daten und übergibt
+      diese via <i><b>POST</b></i> an die angegebene URL.
+      Ist dies erfolgreich, so wird die Funktion <i><b>clearAddPeopleIDB</b></i> aufgerufen, um die Personendaten zum Hinzufügen
+      einer Person aus der IndexedDB zu entfernen.
+
+      <pre><code class="language-javascript">
+function addPeopleToSQL(people) {
+    $.ajax({
+        url: "http://localhost/people/addPerson_Validation",
+        type: "POST",
+        data: {people: people},
+        success: () => {
+            clearAddPeopleIDB()
+                .catch(err => {
+                    console.log("Error in sendPeopleToSQL: ", err);
+                });
+        },
+        error: err => {
+            console.log("Error sending data to server", err);
+        }
+    })
+}
+        </code></pre>
+      <br>
+
+      Ist dies erfolgreich, so wird die Seite neu geladen.
+      Anderenfalls wird in der Konsole eine Fehlermeldung ausgegeben.
+      <br>
+      <br>
+      Die <i><b>clearAddPeopleIDB</b></i>-Funktion entfernt, wie bereits erwähnt,
+      die Datensätze aus der IndexedDB und wird aufgerufen, nachdem diese in der SQL-Datenbank enthalten sind.
+
+      <pre><code class="language-javascript">
+function clearAddPeopleIDB() {
+    return new Promise((resolve, reject) => {
+        let db = window.indexedDB.open("people", 1);
+
+        db.onsuccess = function () {
+            this.result.transaction("addPeople", "readwrite").objectStore("addPeople").clear();
+            resolve();
+        };
+        db.onerror = err => {
+            reject(err);
+        };
+    })
+}
+        </code></pre>
+      <br>
+      
+      Die <i><b>addToAddPeopleIDB</b></i>-Funktion wird aufgerufen, wenn der Nutzer offline ist und Änderungen vornimmt.
+      Sie erhält den Parameter <i><b>people</b></i>, öffnet die IndexedDB und fügt die Daten mit Hilfe der <i><b>add</b></i>-Funktion
+      zum entsprechenden <i><b>ObjectStore</b></i> hinzu.
+      
+      <pre><code class="language-javascript">
+function addToAddPeopleIDB(people) {
+    return new Promise((resolve, reject) => {
+        let db = window.indexedDB.open("people");
+
+        db.onsuccess = function () {
+            let objStore = this.result.transaction("addPeople", "readwrite").objectStore("addPeople");
+
+            objStore.add(people);
+            resolve();
+        };
+        db.onerror = function (err) {
+            reject(err);
+        };
+    })
+}
+        </code></pre>
+      <br>
+    Da es hierbei um die offline-Funktionalitäten rund um das Hinzufügen einer Person geht, wird der <i><b>ObjectStore("addPeople")</b></i> verwendet.
+      <br>
+      <br>
+      Die offline hinzugefügten Daten können über Rechtsklick "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.
+      <br>
+      <br>
+        <img src="img/Chrome_Add_IDB.jpg" alt="Bild_PWA3_Chrome_IDB" class="img-thumbnail mx-auto d-block" width="auto">
+      <br>
+      <br>
+      Die <i><b>if(navigator.onLine)</b></i>-Abfrage muss erweitert werden.
+      Diese initialisiert als erstes den ServiceWorker und  die IndexedDB, wenn der Nutzer online ist.
+      
+            <pre><code class="language-javascript">
+if (navigator.onLine) {
+    initIndexedDB();
+    initServiceWorker();
+    ...
+    getPeopleAddIDB()
+        .then(response => {
+            if (response.length !== 0) {
+                addPeopleToSQL(response);
+            }
+        });
+    ...
+    people = fetch("http://localhost/people/getPeople")
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = "http://localhost/";
+            }
+            return response.json()
+        })
+        .then(data => {
+            networkDataReceived = true;
+            writeToView(data);
+        })
+}
+        </code></pre>
+      <br>
+      
+      Daraufhin wird die Funktion <i><b>getPeopleAddIDB</b></i> aufgerufen.
+      Diese liefert alle zur IndexedDB hinzugefügten Personen zurück, die dann durch die bekannte Methode <i><b>addPeopleToSQL</b></i>
+      der SQL-Datenbank hinzugefügt werden.
+      
+              <pre><code class="language-javascript">
+function getPeopleAddIDB() {
+    return new Promise(function (resolve, reject) {
+        let db = window.indexedDB.open("people", 1);
+        db.onsuccess = function () {
+            this.result.transaction("addPeople")
+                .objectStore("addPeople").getAll().onsuccess = function (event) {
+                resolve(event.target.result);
+            };
+        };
+        db.onerror = err => {
+            reject("Error in getAddIDB: ", err);
+        };
+    })
+}
+        </code></pre>
+      <br>
+      
+      Daten in der IndexedDB werden ebenso wie die Daten vom Server, die im Cache zwischengespeichert sind,
+      über HTML ausgegeben, um auch die offline hinzugefügten, bearbeiteten oder gelöschten Personen weiterhin offline einsehen zu können.
+      Dafür muss die externe JavaScript-Datei wie folgt erweitert werden.
+      
+            <pre><code class="language-javascript">
+caches.open("dynamic-v1").then(function (cache) {
+    cache.match("http://localhost/people/getPeople")
+        .then(response => {
+            if (!response) throw Error("No Data");
+            return response.json();
+        })
+        .then(data => {
+            if (!networkDataReceived) {
+                ...
+                getPeopleAddIDB().then(addPeople => {
+                    if (addPeople.length !== 0) {
+                        let combined = data.concat(addPeople);
+                        writeToView(combined);
+                    } else {
+                        writeToView(data);
+                    }
+                })
+            }
+        })
+        .catch(() => {
+            return people
+        })
+        .catch(err => console.log(err));
+});
+        </code></pre>
+      <br>
+      
+      Die <i><b>caches.open</b></i>-Funktion ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft sodann,
+      ob diese Assets enthält und schreibt diese in die View.
+      Somit werden offline hinzugefügte/bearbeitete/gelöschte Personen direkt clientseitig angezeigt.
+      <br>
+      <br>
+        <img src="img/IDB_Add.jpg" alt="Bild_PWA_3_Add" class="img-thumbnail mx-auto d-block" width="auto">
+      <br>
+      <br>
+      Offline hinzugefügte Personen können nicht erneut bearbeitet werden.
+      Das liegt daran, dass die ID erst bei der nächsten Verbindung zum Internet durch das Datenbanksystem bereitgestellt wird.
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_3" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

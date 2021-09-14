@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA0 - Funktionsweise</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link active">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>Funktionsweise</h1>
+
+        Die grundlegende Webanwendung funktioniert nach dem MVC-Konzept von CodeIgniter.
+        Das bedeutet, dass die Präsentationsschicht durch die Logikschicht strikt von der Datenhaltungsschicht getrennt ist.
+        Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Beispiele,
+        wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
+        <br>
+        <br>
+        <h5>Daten Eingabe:</h5>
+        Für das Hinzufügen einer neuen Person in die Personentabelle
+        werden in der View alle Daten über ein Formular eingelesen und mit der
+        <i><b>post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
+        <br>
+
+        <pre><code class="language-html">
+&ltform action="&lt?php echo base_url("people/addPerson_Validation")?&gt" method="post" id="new-person-form"&gt
+    &ltlabel for="new-prename"&gtPrename:&lt/label&gt
+    &ltinput type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter"&gt
+&lt/form&gt
+        </code></pre>
+        <br>
+
+        Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
+        Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
+        <br>
+
+        <pre><code class="language-php">
+{
+    echo view('addPerson', ['error' => $this->validator]);
+
+    $this->_peopleModel->addPerson(
+        $this->request->getVar('new-prename'),
+        $this->request->getVar('new-surname'),
+        $this->request->getVar('new-street'),
+        $this->request->getVar('new-plz'),
+        $this->request->getVar('new-city'),
+        $this->_session->get('token')
+    );
+    $this->_session->setFlashdata('success', 'Person added');
+    return $this->response->redirect(site_url("people"));
+}
+        </code></pre>
+        <br>
+
+        Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
+        in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
+        <br>
+
+        <pre><code class="language-php">
+public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
+    $data = [
+        'prename' => $prename,
+        'name' => $name,
+        'street' => $street,
+        'zip' => $zip,
+        'city' => $city,
+        'created_by' => $created_by
+    ];
+    $this->_people->insert($data);
+}
+        </code></pre>
+        <br>
+
+        <br>
+        <h5>Daten Ausgabe:</h5>
+        Die Ausgabe aller Personen aus der Datenbank funktioniert in umgekehrter Reihenfolge.
+        Die <i><b>getPeople</b></i>-Funktion des Models greift auf die Tabelle der Personen,
+        die in der Datenbank gespeichert sind, zu und liefert diese als Array zurück.
+        <br>
+        <pre><code class="language-php">
+public function getPeople(): array
+{
+    return $this->_people->get()->getResult();
+}
+        </code></pre>
+        <br>
+        Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
+        Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
+        Daraufhin wird die View gemeinsam mit den Daten des <i><b>$data['people']</b></i>-Array im <i><b>return view</b></i>-Statement übergeben.
+        <br>
+
+        <pre><code class="language-php">
+public function index(): string
+{
+    $data['people'] = $this->_peopleModel->getPeople();
+    return view('people', $data);
+}
+        </code></pre>
+
+        <br>
+        Die View gibt die erhaltenen Informationen aller Personen schließlich mit Hilfe einer Schleife aus.
+        <br>
+        <pre><code class="language-php">
+&lttbody&gt
+&lt?php
+if ($people):
+    foreach ($people as $person) :
+        ?&gt
+&lttr&gt
+            &lttd&gt&lt?= $person->id ?&gt&lt/td&gt
+            &lttd&gt&lt?= $person->prename . " " . $person->name ?&gt&lt/td&gt
+            &lttd&gt&lt?= $person->street ?&gt&lt/td&gt
+            ...
+        &lt/tr&gt
+&lt?php endforeach;
+endif;
+?&gt
+&lt/tbody&gt
+        </code></pre>
+        <br>
+        <br>
+        <h5>Sessions:</h5>
+        Da HTTP ein zustandsloses Protokoll ist, werden Informationen zwischen Aufrufen verschiedener Unterseiten nicht gespeichert .
+        Dieses Problem wird durch die Verwendung von Sessions gelöst.
+        <br>
+        <br>
+        Nach erfolgreicher Eingabe der Login-Informationen des Nutzers wird die Session gesetzt.
+        Das bedeutet im Beispiel, dass folgende Informationen in der Session gespeichert werden.
+
+        <pre><code class="language-php">
+$this->_session->set([
+    'id' => $user->id,
+    'email' => $user->email,
+    'isLoggedIn' => true,
+    'token' => $user->token
+        </code></pre>
+
+        Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
+        wird beim Aufrufen anderer Unterseiten die Session-ID <i><b>id</b></i> mit dem Webserver abgeglichen.
+        Aber auch alle anderen Daten können bei Bedarf aus der Session ausgelesen werden.
+        Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion
+        beendet werden.
+
+        <pre><code class="language-php">
+public function logout()
+{
+    $this->_session->destroy();
+    return redirect()->to('/');
+}
+        </code></pre>
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_0" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="pwa1.html" class="btn btn-secondary">Installierbare PWA
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

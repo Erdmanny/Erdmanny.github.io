@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA1 - ServiceWorker</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link active">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>ServiceWorker</h1>
+
+            Nachdem das Web-App-Manifest erfolgreich erstellt wurde, ist nun lediglich noch der ServiceWorker
+            mit fetch-Event notwendig, um die PWA installierbar zu machen.
+            <br>
+            <br>
+            Der ServiceWorker ist das Herzstück einer PWA und wird installiert, wenn die Webseite anfragt, diesen zu registrieren.
+            Nach der Installation fungiert dieser als Proxy, der im Hintergrund arbeitet, Netzwerkanfragen bearbeitet und Daten cached.
+            Somit erlaubt es der ServiceWorker, die Webseite offline zu verwenden, Anfragen zu bearbeiten, Push-Benachrichtigungen zu senden
+            und Hintergrund-Synchronisationen durchzuführen.
+            <br>
+            <br>
+            Wichtig dabei ist, dass der ServiceWorker sich im root-Verzeichnis des Projektes befindet, damit dieser auf alle
+            Bestandteile des Projektes zugreifen kann.
+            Des Weiteren muss neben der serviceWorker.js-Datei eine weitere JavaScript-Datei hinzugefügt werden,
+            im Beispiel die app.js-Datei, da der Service Worker auf einem eigenen Thread läuft und somit nicht auf den DOM
+            der Webseite zugreifen kann.
+            <br>
+            <br>
+
+            <img src="img/service-worker-infografik.jpg" class="img-thumbnail mx-auto d-block" alt="Lifecycle">
+            <div class="text-center">
+            Quelle: https://www.netzbewegung.com/de/digitale-denkanstoesse/serviceworker/
+            </div>
+
+        <pre><code class="language-html">
+&ltbody&gt
+    &ltscript src="app.js"&gt&lt/script&gt
+&lt/body&gt
+        </code></pre>
+            <br>
+            Die app.js wird im &ltbody&gt-Bereich einer jeden HTML-Seite eingebunden und registriert im ersten Schritt den ServiceWorker,
+            wenn der verwendete Browser diese unterstützt.
+            Die Unterstützung der ServiceWorker wird über navigator abgefragt.
+            Ist die Abfrage erfolgreich, so wird der ServiceWorker über die <i><b>register('serviceworker.js')</b></i>-Funktion
+            registriert und bei Bedarf eine positive Rückmeldung in der Konsole erzeugt.
+            Unterstützt der Browser ServiceWorker nicht, so wird in der Konsole eine entsprechende negative Rückmeldung
+            samt des Fehlercodes ausgegeben.
+
+        <pre><code class="language-javascript">
+function initServiceWorker() {
+    navigator.serviceWorker.register('/serviceworker.js')
+        .then(() => {
+            console.log('[SW] Registration successful.');
+        })
+        .catch(e => {
+            console.error('[SW] Registration failed: ', e);
+        });
+}
+initServiceWorker();
+        </code></pre>
+        <br>
+
+        Nachdem der ServiceWorker nun über die app.js registriert wurde, wird dieser automatisch vom Browser installiert.
+        Nun braucht es in der serviceworker.js ein <i><b>install</b></i>-Event, ein <i><b>activate</b></i>-Event
+        und ein <i><b>fetch</b></i>-Event.
+        <br>
+        <br>
+        <img class="img-thumbnail mx-auto d-block"  src="img/SW.jpeg" alt="Ablauf SW" width="50%">
+        <br>
+        <br>
+        Das <i><b>install</b></i>-Event reagiert auf die Installation durch den Browser mit Hilfe des EventListener
+        (self.addEventListener("install")).
+        Dieses Event wird dafür genutzt, den Cache des Browsers zu öffnen, diesen zu benennen und eventuell mit Assets zu füllen,
+        damit die PWA offline funktionieren kann.
+        Dazu wird die Cache-API des ServiceWorker genutzt, welche es erlaubt, die durch Netzwerkanfragen gelieferten Assets
+        domainspezifisch und dauerhaft zu speichern.
+
+        <pre><code class="language-javascript">
+self.addEventListener("install", (event) => {
+    console.log('install-Event', event);
+});
+        </code></pre>
+            <br>
+            Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, im Kapitel
+            <a href="Fallbackpage.html">Fallbackpage</a> und <a href="Cachen.html">Cachen</a>.
+            <br>
+            <br>
+            Nachdem das <i><b>install</b></i>-Event im ServiceWorker ausgeführt wurde, wird der ServiceWorker aktiviert
+            und das <i><b>activate</b></i>-Event, welches sich ebenfalls im ServiceWorker befindet, ausgelöst.
+            Der Hauptnutzen des <i><b>activate</b></i>-Events ist das Aufräumen von Ressourcen, die in vorherigen Versionen
+            des ServiceWorker-Scripts genutzt wurden.
+            Dabei werden alle alten Caches gelöscht, die nicht dem aktuellen Cache entsprechen.
+
+        <pre><code class="language-javascript">
+self.addEventListener("activate", (event) => {
+    console.log('activate-Event', event);
+});
+        </code></pre>
+            <br>
+            Nach der Aktivierung hat der ServiceWorker Zugriff auf alle Dateien und Seiten und kann über
+            das <i><b>fetch</b></i>-Event festlegen, wie mit den Ressourcen und Serveranfragen umgegangen werden soll.
+            Ein <i><b>fetch</b></i>-Event wird jedes mal abgesetzt, wenn eine Ressource, die der ServiceWorker kontrolliert
+            (im Fall des Beispiels alle Ressourcen, da der ServiceWorker sich im root-Verzeichnis befindet),
+            geladen wird.
+            Mehr zum <i><b>fetch</b></i>-Event und wie dieses die Fallbackpage steuert ist im Kapitel der Fallbackpage zu finden.
+        <pre><code class="language-javascript">
+self.addEventListener("fetch", (event) => {
+    console.log('fetch-Event', event);
+});
+        </code></pre>
+            <br>
+
+            Dank des Web-App-Manifests und dem im ServiceWorker enthaltenen <i><b>fetch</b></i>-Event ist die PWA nun installierbar.
+            <br>
+            Die sogenannte <b>Add to Home Screen (A2HS)</b>-Action kann beim Chrome Browser am PC über einen Pfeil durchgeführt werden,
+            der am rechten Rand der URL-Leiste erscheint, nachdem der Login erfolgreich durchgeführt wurde.
+            <br>
+            Wird die PWA auf dem Smartphone aufgerufen, so erscheint nach dem Login am unteren Bildschirmrand ebenfalls die
+            Installationsaufforderung.
+            In der Abbildung ist zu sehen, dass die installierte Version der PWA als eigene Anwendung startet und nicht
+            als Tab an den Chrome Browser gebunden ist.
+            <br>
+            <br>
+            <img class="img-thumbnail" src="img/PC_Vergleich_PWA_Chrome.png" alt="Vergleich">
+            <br>
+            <br>
+            Des Weiteren ist zu erkennen, dass die PWA sich, wie eine native App aus dem Play Store,
+            im Vollbildmodus zeigt und beispielsweise keine URL einblendet.
+            <br>
+            <br>
+            <div class="text-center">
+            <img width="20%" class="img-thumbnail" src="img/Chrome.JPG" alt="Chrome">
+            <img width="20%" class="img-thumbnail" src="img/Installiert.JPG" alt="Installiert">
+            <img width="20%" class="img-thumbnail" src="img/Installiert_vs_Chrome.JPG" alt="Installiert_vs_Chrome">
+            </div>
+            <br>
+            <br>
+            Wie beim Web-App-Manifest kann nach der Fertigstellung der Komponenten des ServiceWorker ebenfalls überprüft werden,
+            ob dieser erkannt wird und richtig arbeitet.
+            Dafür ist im Chrome Browser nach erfolgtem Rechtsklick mit der Maus "Untersuchen" -> "Application" -> "Service Workers" auszuwählen.
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/SWPruefen.png" alt="SWPrüfen" width="auto">
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_1" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="Fallbackpage.html" class="btn btn-secondary">Fallbackpage
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

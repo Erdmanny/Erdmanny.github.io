@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA1 - Manifest</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link active" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link active">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>Web-App-Manifest</h1>
+
+        Der erste Schritt für die Erstellung der installierbaren PWA ist das Web-App-Manifest.
+        Es befindet sich im root-Verzeichnis des Projektes und beschreibt die Eigenschaften einer PWA.
+        Dadurch macht das Manifest die PWA über den Browser für alle Endgeräte installierbar.
+        Die Datei liegt im JSON Format vor (.json oder .webmanifest) und wird im Head aller HTML-Seiten verlinkt.
+
+    <pre><code class="language-html">
+&ltlink rel="manifest" href="manifest.webmanifest"&gt
+        </code></pre>
+
+    Das Manifest wird von Chrome, Edge, Opera, Firefox, UC Browser
+    und dem Browser von Samsung vollständig unterstützt.
+    Da die Anforderungen der verschiedenen Browser an ein Web-App-Manifest
+    teilweise etwas voneinander abweichen, wird der Wizard sich auf die
+    Anforderungen von Google Chrome stützen.
+    Welche Anforderungen sich konkret voneinander unterscheiden,
+    ist <a href="https://web.dev/install-criteria/">hier</a> zu finden.
+    <br>
+    Die Mindestanforderungen für ein Web-App-Manifest in Chrome sind die folgenden:
+
+      <ul>
+          <li><b>short_name</b> oder <b>name</b></li>
+          <li><b>192x192 Icon</b></li>
+          <li><b>512x512 Icon</b></li>
+          <li><b>start_url</b> - gibt an, wo die Anwendung gestartet werden soll</li>
+          <li><b>display</b> - muss auf fullscreen, standalone oder minimal-ui gesetzt sein</li>
+          <li><b>prefer_related_applications</b> - darf nicht vorhanden sein oder muss auf false gesetzt werden</li>
+      </ul>
+
+    Weitere Elemente, die im Web-App-Manifest gesetzt werden können, sind <a href="https://web.dev/add-manifest/">hier</a> zu finden.
+    <br>
+    <br>
+    Eine der Eigenschaften von <i><b>name</b></i> oder <i><b>short_name</b></i> muss enthalten sein.
+    Bei einem längeren Namen der PWA kann es jedoch auch durchaus sinnvoll sein, beide Eigenschaften anzugeben.
+    Wenn beide angegeben werden, wird die Eigenschaft <i><b>short_name</b></i> an Stellen verwendet, an denen der Platz begrenzt ist.
+    Die Eigenschaft <i><b>name</b></i> wird hingegen angezeigt, wenn die App installiert wurde.
+    <br>
+    <br>
+    Das Web-App-Manifest muss mindestens ein Icon der Größe 192x192 und eins der Größe 512x512 enthalten.
+    Die Eigenschaft Icon ist ein Array und kann beliebig viele Icons enthalten.
+    Jedes Icon muss dabei eine Quelle (<i><b>src</b></i>), einen Typ (<i><b>type</b></i>)
+    und eine Größe (<i><b>size</b></i>) als Attribut haben.
+    Des Weiteren sollte es mindestens ein Icon mit <i><b>purpose: maskable any</b></i> für die Unterstüzung
+    des Betriebssystems Android geben.
+    <br>
+    Die Eigenschaft <i><b>start_url</b></i> im Manifest gibt die URL an, die geladen wird,
+    wenn ein Benutzer die Anwendung von einem Gerät startet.
+    <br>
+    Mit Hilfe der Eigenschaft <i><b>display</b></i> kann eingestellt werden, wie die PWA dargestellt werden soll.
+    Standalone ist dabei die Eigenschaft, die die PWA noch mehr einer nativen App ähneln lässt, da keine URL oder
+    andere für Browser typischen Dinge angezeigt werden.
+
+    <pre><code class="language-json">
+{
+  "name": "Installierbare PWA",
+  "short_name": "PWA 1",
+  "start_url": "http://localhost/",
+  "description": "Fallbackpage, no offline usage",
+  "display": "standalone",
+  "background_color": "#8BEF9B",
+  "theme_color": "#0032FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon/icon192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icon/icon512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ]
+}
+        </code></pre>
+        <br>
+        Das Web-App-Manifest des Beispiels enthält neben den Mindestanforderungen noch einige andere Eigenschaften,
+        wie eine Beschreibung (<i><b>description</b></i>), die Farbgebung der PWA als installierte Version (<i><b>background_color</b></i>,
+        die <i><b>theme_color</b></i>) und die Orientierung (<i><b>orientation</b></i>).
+        Die Orientierung gibt an, wie die PWA geöffnet wird.
+        Des Weiteren sind neben den beiden gezeigten noch 6 weitere Icons in anderen Größen im Web-App-Manifest enthalten.
+        Je mehr Größen angegeben werden, desto besser kann sich das entsprechende Endgerät aussuchen, welche Icongröße am besten passt.
+        <br>
+        <br>
+        Um nach der Fertigstellung des Web-App-Manifests zu überprüfen, ob es richtig eingebunden ist und um zu sehen, ob der Browser
+        alle angegebenen Elemente erkennt, kann in Chrome mit Rechtsklick "Untersuchen" -> "Application" -> "Manifest" ausgewählt werden.
+        Dieses kann daraufhin auf Fehler überprüft werden.
+      <br>
+      <br>
+    <img class="img-thumbnail mx-auto d-block" src="img/WAM_Chrome.png" alt="Manifest in Chrome" width="auto">
+      <br>
+      <br>
+        Dabei werden bei richtiger Einbindung alle im Manifest festgelegten Bestandteile aufgelistet.
+        Wenn Fehler auftreten, ist zunächst die Art des Einbindens, dann die <i><b>start_url</b></i> und als letztes die Rechtschreibung der
+        Attribute des Manifests zu überprüfen.
+        <br>
+        Im Beispiel sieht man, dass alle Eigenschaften der Manifest-Datei auch im Browser angezeigt werden und somit funktionieren.
+      <br>
+      <br>
+        <b>Besonderheiten:</b> <br>
+            Aufgrund dessen, dass das Apple Betriebssystem iOS die <i><b>icons</b></i> nicht unterstützt,
+            muss die PWA dahingehend etwas modifiziert werden.
+            <br>
+            Für die Unterstützung des Icon auf dem Homebildschirm muss dabei im Head jeder HTML-Seite eine Verlinkung
+            zu dem Icon eingebunden werden, das bei iOS-Benutzern verwendet werden soll.
+
+      <pre><code class="language-html">
+&ltlink rel="apple-touch-icon" href="icon/icon96.png"&gt
+      </code></pre>
+      <br>
+
+        Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der <i><b>theme_color</b></i> im Web-App-Manifest
+        diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
+      <pre><code class="language-html">
+&ltmeta name="theme-color" content="#0032FF"&gt
+      </code></pre>
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_1" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="ServiceWorker.html" class="btn btn-secondary">ServiceWorker
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

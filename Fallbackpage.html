@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA1 - Fallbackpage</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link active">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>Offline-Fallbackpage</h1>
+
+            Die Fallbackpage wird angezeigt, wenn keine Internetverbindung besteht.
+            Diese kann nach Belieben gestaltet werden.
+            Da bei der installierbaren PWA ohne Internetverbindung die Fallbackpage auftaucht, ist diese die einzige Seite,
+            die offline zur Verfügung gestellt werden muss.
+            <br>
+            Die Fallbackpage wird, wie bereits erwähnt, offline zur Verfügung gestellt, indem über das im ServiceWorker
+            enthaltene <i><b>install</b></i>-Event die benötigten statischen Assets zum Cache hinzugefügt werden.
+            <br>
+        <pre><code class="language-javascript">
+const CACHE_NAME = "offline";
+const OFFLINE_URL = "/fallback";
+const STATIC_ASSETS = [
+    "logo.ico",
+    "manifest.webmanifest",
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    ...
+];
+
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(STATIC_CACHE).then(cache => {
+            cache.addAll(STATIC_ASSETS);
+            cache.add(OFFLINE_URL);
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre>
+<br>
+            Dabei wird im <i><b>install</b></i>-Event mit der <i><b>caches.open()</b></i>-Funktion ein neuer Cache mit dem in der
+            Konstante <b>CACHE_NAME</b> vergebenen Namen hinzugefügt.
+            Daraufhin werden alle für die Fallbackpage notwendigen Assets, die der definierten Konstante
+            <b>STATIC_ASSETS</b> als Array hinzugefügt wurden, wie beispielsweise die Icons, das Web-App-Manifest und die CSS-Datei
+            (Bootstrap), mit der <i><b>cache.addAll()</b></i>-Funktion zum Cache hinzugefügt.
+            Die <i><b>cache.addAll()</b></i>-Funktion erwartet ein Array von Assets.
+            Soll ein einzelnes Asset gecached werden, so wird die <i><b>cache.add()</b></i>-Funktion verwendet.
+            Mit Hilfe von <i><b>self.skipWaiting()</b></i> wird der wartende ServiceWorker, nachdem die Caches befüllt wurden,
+            zu einem aktiven ServiceWorker.
+            Die <i><b>waitUntil()</b></i>-Methode sorgt dafür, dass der Prozess im kontrollierten Bereich komplett abgeschlossen ist, bevor
+            <i><b>self.skipWaiting()</b></i> ausgeführt wird.
+            <br>
+            <br>
+            Nach dem Hinzufügen der Assets sind diese im Cache gespeichert und können im
+            "Cache Storage" unter dem gewählten Namen eingesehen werden.
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache-Fallbackpage.png" alt="Cache Fallbackpage" width="auto">
+            <br>
+            <br>
+            <pre><code class="language-javascript">
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== CACHE_NAME)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre>
+            <br>
+            Das <i><b>activate</b></i>-Event muss für die Verwendung der Fallbackpage ebenfalls erweitert werden,
+            damit es den genannten Aufgaben nachkommen kann, sprich Ressourcen aufräumt und das <i><b>Fetchen</b></i> ermöglicht.
+            <br>
+            <br>
+            Das <i><b>fetch</b></i>-Event des ServiceWorker wird für diesen Zweck erweitert um mitzuteilen,
+            dass die Fallbackpage aufgerufen werden soll, wenn der Server keine Rückmeldung liefert.
+            Der EventListener horcht dabei auf Events aus dem kontrollierten Bereich und wird somit jedes Mal ausgelöst.
+            Handelt es sich um eine Navigation-Request prüft das <i><b>fetch</b></i>-Event im <i><b>try</b></i>-Block,
+            ob eine Rückmeldung vom Server kommt.
+
+        <pre><code class="language-javascript">
+self.addEventListener("fetch", (event) => {
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            (async () => {
+                try {
+                    return await fetch(event.request);
+                } catch (error) {
+                    const cache = await caches.open(STATIC_CACHE);
+                    return await cache.match(OFFLINE_URL);
+                }
+            })()
+        );
+    } else {
+        event.respondWith(
+            caches.match(event.request).then(cacheRes => {
+                return cacheRes || fetch(event.request);
+            })
+        )
+    }
+});
+        </code></pre>
+            <br>
+            Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Unterseite navigiert.
+            Passiert dies jedoch nicht, so werden die im Cache enthaltenen Inhalte, sprich die Fallbackpage, angezeigt.
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/FBP_IMG.jpg" alt="Beispiel-Fallbackpage" width="auto">
+
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_1" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="Lighthouse.html" class="btn btn-secondary">Lighthouse
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

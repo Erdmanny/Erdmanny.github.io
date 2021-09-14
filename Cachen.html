@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--    <link rel="stylesheet" href="styles.css">-->
+    <!--    <link rel="manifest" href="manifest.webmanifest">-->
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA2 - Cachen</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link link-dark">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link active">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>Cachen</h1>
+
+            Nachdem die passende Strategie gewählt ist, ist zu überlegen, welche Daten gecached werden sollen.
+            Handelt es sich bei den Inhalten der Webseite lediglich um statische Assets, so ist diese Aufgabe recht einfach
+            und schnell erledigt.
+            Kommen dynamische Assets hinzu, gestaltet sich die Umsetzung der passenden Cache-Strategie als wesentlich komplizierter.
+            <br>
+            <br>
+            <br>
+            <h3>Statische Assets</h3>
+
+            <h5>Zu den statischen Assets gehören:</h5>
+            <ul>
+                <li>Alle verwendeten Bilder/Icons/Logos</li>
+                <li>Die CSS-Datei bzw. Bootstrap</li>
+                <li>Die externe JavaScript-Datei (app.js)</li>
+                <li>Das Web-App-Manifest</li>
+                <li>Die HTML-Seiten</li>
+            </ul>
+
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_StaticCache.png" alt="StaticCache" width="auto">
+            <br>
+            <br>
+
+            Bei nur statischen Assets ist es sinnvoll, diese im <i><b>install</b></i>-Event zu cachen.
+            Dafür muss, wie beim Cachen der Fallbackpage der Cache geöffnet und gefüllt werden.
+
+            <pre><code class="language-javascript">
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            cache.addAll(ASSETS);
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre>
+            <br>
+
+            Das <i><b>activate</b></i>-Event verändert sich gegenüber dem der installierbaren PWA nicht, da lediglich der statische Cache geprüft werden muss.
+
+            <pre><code class="language-javascript">
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== CACHE_NAME)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre>
+            <br>
+
+            Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut als bei der installierbaren PWA.
+            Es beantwortet erstmal alle Anfragen beziehungsweise Seitenaufrufe aus dem Cache.
+            Fehlen Assets teilweise, so werden diese vom Netzwerk angefragt (gefetched).
+
+            <pre><code class="language-javascript">
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request);
+        })
+    )
+});
+        </code></pre>
+            <br>
+            <br>
+            <br>
+            <h3>Statische und dynamische Assets</h3>
+
+            Wenn es darum geht, dass die PWA sowohl statische als auch dynamische Assets enthält, muss erstmal festgelegt werden,
+            welche Assets statisch sind und welche dynamisch.
+            Zu den dynamischen Assets zählen alle die, die sich ständig verändern, also beispielsweise von Nutzern verändert
+            werden können oder aus Datenbanken ausgegeben werden.
+            Im Beispiel der Personentabelle sind das alle Personen, die in der Tabelle hinzugefügt wurden und deren Attribute.
+            Des Weiteren muss überlegt werden, welche der dynamischen Daten relevant genug sind, um diese offline zur Verfügung stellen zu wollen.
+        <br>
+            <br>
+            <h5>ServiceWorker:</h5>
+            Für das Cachen von dynamischen Assets muss der ServiceWorker erweitert werden.
+            Dort wird nun, neben dem statischen Cache, der dynamische Cache mit Assets befüllt.
+
+            <pre><code class="language-javascript">
+const STATIC_CACHE = "static-v1";
+const DYNAMIC_CACHE = "dynamic-v1";
+
+const DYNAMIC_ASSETS = [
+    "http://localhost/people/getPeople"
+];
+
+const STATIC_ASSETS = [
+    "/logo.ico",
+    "/manifest.webmanifest",
+    "/people",
+    ...
+];
+        </code></pre>
+        <br>
+            <h6><i>Wichtig:</i></h6>
+            Die ServiceWorker-Datei darf nicht gecached werden!
+            <br>
+            <br>
+            <h5>Zu den dynamischen Assets gehören:</h5>
+            <ul>
+                <li>Die Funktionen, die auf die dynamischen Inhalte zugreifen, die gecached werden sollen</li>
+                <li>Funktionen zur Validierung der Nutzereingaben</li>
+            </ul>
+            <br>
+            Die statischen und dynamischen Assets werden im Beispiel im <i><b>install</b></i>-Event dem entsprechenden
+            Cache hinzugefügt.
+            Dabei werden die beiden Caches separat und nacheinander mit der <i><b>caches.open</b></i>-Funktion erstellt.
+            Daraufhin werden diese mit Hilfe der <i><b>addAll</b></i> bzw. <i><b>add</b></i>-Funktion gefüllt.
+
+           <pre><code class="language-javascript">
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(STATIC_CACHE).then(cache => {
+            cache.addAll(STATIC_ASSETS);
+            cache.add(OFFLINE_URL);
+        })
+    );
+    event.waitUntil(
+        caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.addAll(DYNAMIC_ASSETS);
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre>
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_DynamicCache.jpg" alt="DynamicCache" width="auto">
+            <br>
+            <br>
+
+            Des Weiteren werden, wie im vorherigen Kapitel bereits erklärt, im <i><b>activate</b></i>-Event die Caches gelöscht, die nicht dem aktuellen Cache entsprechen.
+            Hier kommt dazu, dass neben dem statischen Cache nun auch der dynamische Cache überprüft werden muss.
+
+            <pre><code class="language-javascript">
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre>
+            <br>
+            Neben dem <i><b>install</b></i> und dem <i><b>activate</b></i>-Event muss ebenfalls das <i><b>fetch</b></i>-Event erweitert werden.
+            Dieses arbeitet nach der bereits erwähnten "Cache then Network"-Strategie.
+            Das <i><b>fetch</b></i>-Event der Beispiel-PWA unterscheidet dabei zwischen mehreren Ereignissen, die eintreten können:
+            <br>
+            <br>
+            <ul>
+                <li><b>Zeile 1-10:</b> Sind die abgefragten dynamischen Assets im Cache enthalten,
+                    so werden diese dem Cache entnommen und angezeigt. Gleichzeitig wird eine Netzwerkanfrage gesendet
+                    und ein Klon der <i><b>response</b></i> mit Hilfe der <i><b>cache.put</b></i>-Funktion in den dynamischen
+                    Cache gespeichert. Daraufhin wird die <i><b>response</b></i> der Netzwerkanfrage angezeigt</li>
+                <li><b>Zeile 11-16:</b> Wenn die <i><b>fetch</b></i>-Anfrage der externen JavaScript-Datei (app.js) eine einzelne Person anfragt,
+                    um die Personendaten beispielsweise im Formular zur Bearbeitung anzuzeigen, so wird dieser Fall verwendet</li>
+                <li><b>Zeile 17-33:</b> Dieser Abschnitt behandelt die statischen Assets. Im <i><b>try</b></i>-Block wird versucht,
+                    die statischen Inhalte aus dem Cache zu erzeugen. Sind diese nicht vorhanden,
+                    so greift der <i><b>catch</b></i>-Block und die Fallbackpage wird angezeigt</li>
+            </ul>
+
+            <pre><code class="language-javascript">
+self.addEventListener("fetch", (event) => {
+    if (DYNAMIC_ASSETS.indexOf(event.request.url) !== -1) {
+        event.respondWith(
+            caches.open(DYNAMIC_CACHE).then(function (cache) {
+                return fetch(event.request).then(function (response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                })
+            })
+        )
+    } else if (event.request.url.includes("editPerson?")) {
+        event.respondWith(
+            caches.match("/people/editPerson").then(cacheRes => {
+                return cacheRes || fetch(event.request)
+            })
+        )
+    } else {
+        if (event.request.mode === "navigate") {
+            event.respondWith(
+                (async () => {
+                    try {
+                        const cache = await caches.open(STATIC_CACHE);
+                        if (await cache.match(event.request)){
+                            return await cache.match(event.request)
+                        } else {
+                            return await fetch(event.request);
+                        }
+                    } catch (error) {
+                        const cache = await caches.open(STATIC_CACHE);
+                        return await cache.match(OFFLINE_URL);
+                    }
+                })()
+            );
+        } else {
+            event.respondWith(
+                caches.match(event.request).then(cacheRes => {
+                    return cacheRes || fetch(event.request);
+                })
+            )
+        }
+    }
+});
+        </code></pre>
+            <br>
+            <br>
+            <h5>app.js:</h5>
+            Die in der app.js-Datei implementierte Funktion <i><b>initTable</b></i> baut eine leere Personentabelle auf.
+            Dort werden danach über die <i><b>writeToView</b></i>-Funktion die Daten eingefügt.
+            Dabei ist wichtig, dass die Tabelle der <i><b>initTable</b></i>-Funktion sowohl alle Attribute der Personen enthält,
+            als auch ein Feld für die Buttons zum Editieren und Löschen der Person.
+            <pre><code class="language-javascript">
+const peopleTable = $("#peopleTable");
+
+function initTable() {
+    peopleTable.bootstrapTable({
+        columns: [{
+            field: "id",
+            title: "ID"
+        }, {
+            field: "fullname",
+            title: "Name"
+        },
+        ...
+        ]
+    })
+}
+initTable();
+        </code></pre>
+            <br>
+
+            Aktualisiert der Nutzer die Seite, wenn er online ist, so wird ein <i><b>fetch</b></i>-Event mit der angegebenen
+            URL ausgelöst.
+            Über die Boolean-Variable <i><b>networkDataReceived</b></i> wird abgefragt, ob Daten aus der Netzwerkanfrage erhalten wurden.
+
+            <pre><code class="language-javascript">
+let people = null;
+let networkDataReceived = false;
+
+if (navigator.onLine) {
+    initServiceWorker();
+    people = fetch("http://localhost/people/getPeople")
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = "http://localhost/";
+            }
+            return response.json()
+        })
+        .then(data => {
+            networkDataReceived = true;
+            writeToView(data);
+        })
+}
+        </code></pre>
+            <br>
+
+            Sind keine Daten enthalten, so werden die Daten aus dem Cache in die View geschrieben.
+            <br>
+            Bei der URL handelt es sich um die im Controller enthaltene <i><b>getPeople</b></i>-Funktion,
+            welche ein JSON-Objekt zurückgibt.
+
+            <pre><code class="language-javascript">
+caches.open("dynamic-v1").then(function (cache) {
+    cache.match("http://localhost/people/getPeople")
+        .then(response => {
+            if (!response) throw Error("No Data");
+            return response.json();
+        })
+        .then(data => {
+            if (!networkDataReceived) {
+                writeToView(data);
+            }
+        })
+        .catch(() => {
+            return people;
+        })
+        .catch(err => console.log(err));
+});
+        </code></pre>
+            <br>
+
+            Durch das <i><b>fetch</b></i>-Event in der app.js-Datei wird das <i><b>fetch</b></i>-Event im ServiceWorker ausgelöst,
+            da die app.js, anders als der ServiceWorker, nicht auf einem eigenständigen Thread läuft.
+            Der ServiceWorker fängt daraufhin die aufgerufene URL ab, erkennt statische bzw. dynamische Daten und reagiert dementsprechend.
+            Sind die Assets statisch, so werden diese aus dem Cache geladen.
+            Wenn es sich allerdings um dynamische Daten handelt, so fragt der ServiceWorker die Daten am Server an,
+            fetched die Antwort, speichert eine Kopie im Cache und gibt die Antwort an die ursprüngliche Anfrage zurück.
+            <br>
+            Das dabei empfangene JSON-Objekt wird dann über Bootstrap Table in HTML dargestellt.
+            <br>
+            Sollte keine Internetverbindung bestehen, so wird der dynamische Cache durch die <i><b>cache.open</b></i>-Funktion geöffnet
+            und die darin zuletzt vom Server erhaltenen Assets in der View ausgegeben.
+            <br>
+            <br>
+            Die <i><b>writeToView</b></i>-Funktion lädt die erhaltenen Inhalte in die Personentabelle.
+
+            <pre><code class="language-javascript">
+function writeToView(people) {
+    peopleTable.bootstrapTable('load', people);
+}
+        </code></pre>
+            <br>
+
+            Der <i><b>EventListener('online')</b></i> sowie <i><b>EventListener('offline')</b></i> aktualisiert die Webseite,
+            sobald registriert wird, dass diese offline bzw. wieder online gegangen ist.
+
+            <pre><code class="language-javascript">
+window.addEventListener('online', () => {
+    location.reload();
+})
+
+window.addEventListener('offline', () => {
+    location.reload();
+})
+        </code></pre>
+            <br>
+            <br>
+            <h5>Controller:</h5>
+            CodeIgniter wird für die Read-Only und die Read-Write PWA nicht mehr als "reines" MVC-Framework verwendet.
+            Daten werden nun durch die Verwendung von <i><b>ResponseTrait</b></i> über JavaScript vom Controller angefragt,
+            damit dieser API-Funktionalitäten bereitstellt.
+
+            <pre><code class="language-php">
+//Vorher
+public function index(): string
+{
+    $data['people'] = $this->_peopleModel->getPeople();
+    return view('people', $data);
+}
+
+//Nachher
+public function index(): string
+{
+    return view('people');
+}
+        </code></pre>
+            <br>
+
+            Das bedeutet konkret, dass die <i><b>index</b></i>-Funktion kein <i><b>$data</b></i>-Array mehr enthält,
+            in das die Daten des Model geladen werden und die schließlich an die View übergeben werden.
+            <br>
+            <br>
+            Stattdessen müssen nun neue Funktionen implementiert werden, die die Daten abfragen können.
+            Im Beispiel der Personentabelle sollen alle Personen, die online zur Tabelle hinzugefügt wurden, offline weiter einsehbar sein.
+            Die <i><b>getPeople</b></i>-Funktion überprüft als allererstes, ob die Cookies gesetzt sind,
+            da diese relevant für die Validierung der Nutzereingaben sind.
+            Sind diese gesetzt, so werden sie gelöscht und neu gesetzt.
+            Daraufhin werden die Daten wie gewohnt über die <i><b>getPeople</b></i>-Funktion des Models der Datenbank entnommen
+            und in der Variable <i><b>$people</b></i> gespeichert.
+            <br>
+            Mit Hilfe der <i><b>for</b></i>-Schleife werden dann die Attribute "Adresse" und "Name" zusammengefasst,
+            da diese auch gemeinsam in einer Spalte der Tabelle auftauchen.
+            Des Weiteren werden für jede Person die beiden Buttons mit der jeweiligen ID generiert.
+
+            <pre><code class="language-php">
+public function getPeople(): Response
+{
+    ... //unset und set cookies
+
+    $people = $this->_peopleModel->getPeople();
+
+    ... //Zusammenfassen der Attribute
+
+    return $this->respond($people)
+        ->setContentType('application/json');
+}
+        </code></pre>
+            <br>
+            Anschließend werden die Daten nicht, wie bei der Umsetzung nach dem MVC-Konzept,
+            direkt in die View geschrieben, sondern als Antwort vom Server im JSON-Format zurückgegeben,
+            damit JavaScript diese verarbeiten kann.
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_2" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="pwa3.html" class="btn btn-secondary">Read-Write PWA
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="img/icon192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7386D5">
+    <meta name="theme-color" content="#7386D5">
+
+    <link rel="icon" href="img/PWA_Logo.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+
+    <title>PWA1 - Web-API</title>
+
+    <style>
+        a {
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand"><b>PWA Wizard</b></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav flex-column">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link active" aria-current="page">
+                    <b>Startseite</b>
+                </a>
+            </li>
+            <li>
+                <a href="pwa0.html" class="nav-link">
+                    <b>Beispiel</b>
+                </a>
+            </li>
+            <li>
+                <a href="Datenbank.html" class="nav-link link-dark">
+                    - Datenbank
+                </a>
+            </li>
+            <li>
+                <a href="Funktionsweise.html" class="nav-link link-dark">
+                    - Funktionsweise
+                </a>
+            </li>
+            <li>
+                <a href="pwa1.html" class="nav-link link-dark">
+                    <b>Installierbare PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Manifest.html" class="nav-link link-dark">
+                    - Web-App-Manifest
+                </a>
+            </li>
+            <li>
+                <a href="ServiceWorker.html" class="nav-link link-dark">
+                    - ServiceWorker
+                </a>
+            </li>
+            <li>
+                <a href="Fallbackpage.html" class="nav-link link-dark">
+                    - Fallbackpage
+                </a>
+            </li>
+            <li>
+                <a href="Lighthouse.html" class="nav-link link-dark">
+                    - Lighthouse
+                </a>
+            </li>
+            <li>
+                <a href="WebAPI.html" class="nav-link active">
+                    - Web-API
+                </a>
+            </li>
+            <li>
+                <a href="pwa2.html" class="nav-link link-dark">
+                    <b>Read-Only PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="Cache-Strategie.html" class="nav-link link-dark">
+                    - Cache-Strategie
+                </a>
+            </li>
+            <li>
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
+                </a>
+            </li>
+            <li>
+                <a href="pwa3.html" class="nav-link link-dark">
+                    <b>Read-Write PWA</b>
+                </a>
+            </li>
+            <li>
+                <a href="IndexedDB.html" class="nav-link link-dark">
+                    - IndexedDB
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col">
+            <h1>Web-API</h1>
+
+            Anhand der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in PWAs erläutert.
+            Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes Mal gesendet,
+            wenn eine Person hinzugefügt, geändert oder gelöscht wird.
+            <br>
+            <br>
+            <h4>Datenbank</h4>
+            Zuerst muss die Datenbank um eine Tabelle, nämlich die der Abonnenten (Subscribers), erweitert werden.
+            Dort werden alle Nutzer eingetragen, die sich für die Benachrichtigungen registriert haben.
+            <br>
+            <br>
+            <h5>Spalten der Abonnenten (Subscribers):</h5>
+            <ul>
+                <li><b>ID:</b> Die eindeutige ID des Abonnenten</li>
+                <li><b>endpoint:</b> Verwaltet die Zustellung der Benachrichtigung an den Browser</li>
+                <li><b>auth:</b> Wird vom Browser bereitgestellt und authentifiziert den Nutzer</li>
+                <li><b>p256dh:</b> Dieser Schlüssel wird als Teil des Abonnements zurückgegeben</li>
+            </ul>
+            <img class="img-thumbnail mx-auto d-block" src="img/Database_PWA_1.png" alt="Database_PWA_1" width="auto">
+
+            <br>
+            <br>
+            <h4>PushNotifications-Model:</h4>
+            Neben der Datenbank muss zudem ein neues Model (PushNotificationsModel) hinzugefügt werden,
+            welches die Daten behandelt, die für die Push-Benachrichtigungen notwendig sind.
+            Dieses enthält Funktionen, um neue Abonnenten hinzuzufügen,
+            zu entfernen und um alle Abonnenten der Tabelle auszugeben.
+
+            <pre><code class="language-php">
+// Abonnenten hinzufügen, Prinzip beim löschen gleich
+public function insertSubscriber($endpoint, $auth, $p256dh){
+    $data = [
+        'endpoint' => $endpoint,
+        'auth' => $auth,
+        'p256dh' => $p256dh
+    ];
+    $this->_subscribers->insert($data);
+    return true;
+}
+
+// Alle Abonnenten der Datenbank erhalten
+public function getAllSubscribers(){
+    return $this->_subscribers->get()->getResult();
+}
+
+// Nutzer durch dessen endpoint ausfindig machen
+public function getSubscribersByEndpoint($endpoint){
+    return $this->_subscribers
+        ->where("endpoint", $endpoint)
+        ->get()
+        ->getResult();
+}
+        </code></pre>
+            <br>
+            <br>
+            <h4>People-Controller:</h4>
+            Die Funktionen für das Hinzufügen, Löschen und Bearbeiten von Personen der Tabelle müssen erweitert werden,
+            da jedes Mal eine Nachricht gesendet werden soll, wenn eine Änderung an der Personentabelle vorgenommen wird.
+            <br>
+            Aus diesem Grund werden als erstes über die Funktion <i><b>getAllSubscribers</b></i> aus dem Model
+            alle Abonnenten in die Variable <i><b>$subscribers</b></i> eingelesen.
+            <br>
+            Danach werden in die Variable <i><b>$keys_auth</b></i> alle Informationen der Abonnenten gespeichert,
+            an die die Nachricht gesendet werden soll.
+
+
+            <pre><code class="language-php">
+$subscribers = $this->_pushNotificationsModel->getAllSubscribers();
+
+foreach ($subscribers as $row){
+    $keys_auth = array(
+        "contentEncoding" => "aesgcm",
+        "endpoint" => $row->endpoint,
+        "keys" => array(
+            "auth" => $row->auth,
+            "p256dh" => $row->p256dh
+        )
+    );
+    $this->sendMessage($keys_auth, $row->endpoint, "added", $this->request->getVar('new-prename'),
+                $this->request->getVar('new-surname'));
+        </code></pre>
+
+            Innerhalb der <i><b>foreach</b></i>-Schleife wird dann mit jedem Subscriber die Funktion <i><b>sendMessage</b></i> aufgerufen.
+            <br>
+            Diese Funktion erstellt die Nachricht, die angezeigt werden soll sowie das WebPush Objekt und versendet schlussendlich die Nachricht.
+            <br>
+            Die <i><b>push_subscription</b></i>-Funktion besteht aus einem switch-case und ruft, je nach Aktion, die dazugehörige Funktion des Models auf,
+            die dann die Person zu den Abonnenten hinzufügt, löscht oder bearbeitet.
+
+            <br>
+            <br>
+            <h4>People-View:</h4>
+            Nach der Anpassung der Datenbank und des Controllers muss nun als Drittes den <i><b>Views</b></i> ein Button hinzugefügt werden,
+            auf den die Nutzer klicken können, um sich für die Push-Benachrichtigungen zu registrieren.
+
+            <pre><code class="language-html">
+&ltbutton id="pushButton" class="btn btn-primary mr-2 d-flex justify-content-center align-items-center"&gtPush on&lt/button&gt
+        </code></pre>
+            Im Beispiel wurde dies mittels eines Button gelöst.
+            Eine andere Möglichkeit ist das Anzeigen eines Pop-Up-Fensters, in dem der Nutzer die Benachrichtigungen aktivieren kann.
+
+            <br>
+            <br>
+            <h4>app.js:</h4>
+            Die app.js-Datei fragt ab, ob ein <i><b>push</b></i>-Button im Dokument gesetzt ist, registriert diesen daraufhin im ServiceWorker,
+            und durch die <i><b>registration.pushManager.getSubscription</b></i>-Funktionen kann der Nutzer nun Nachrichten vom Server erhalten.
+            Als weiteres muss die app.js einen <i><b>click</b></i>-Event-Listener enthalten, der auf das Klicken des Benutzers auf den Push-Button horcht.
+
+            <pre><code class="language-javascript">
+const applicationServerKey =
+    'BAwBLsFBXsZ...';
+
+const pushButton = document.getElementById('pushButton');
+
+    if (pushButton !== null) {
+        navigator.serviceWorker.ready
+            .then(serviceWorkerRegistration =>
+                serviceWorkerRegistration.pushManager.getSubscription())
+            .then(subscription => {
+                console.log("Subscription: " + JSON.stringify(subscription));
+                if (subscription === null) {
+                    pushButton.textContent = 'Push off';
+                } else {
+                    pushButton.textContent = 'Push on';
+                }
+            });
+
+
+        pushButton.addEventListener('click', () => {
+            navigator.serviceWorker.ready
+                .then(serviceWorkerRegistration =>
+                    serviceWorkerRegistration.pushManager.getSubscription())
+                .then(subscription => {
+                    if (subscription === null) {
+                        push_subscribe()
+                            .then(res => {
+                                console.log("subscribe: " + res);
+                            });
+                        pushButton.textContent = 'Push on';
+                    } else {
+                        if (confirm("are you sure you want to unsubscribe?")) {
+                            push_unsubscribe();
+                            pushButton.textContent = 'Push off'
+                        }
+                    }
+                });
+        });
+    }
+        </code></pre>
+
+            Besteht zum Zeitpunkt des Klicks auf den Button noch kein Abonnement, so wird die <i><b>push_subscribe</b></i>-Methode aufgerufen.
+
+            <pre><code class="language-javascript">
+function push_subscribe() {
+    return checkNotificationPermission()
+        .then(() => navigator.serviceWorker.ready)
+        .then(serviceWorkerRegistration =>
+            serviceWorkerRegistration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(applicationServerKey)
+            })
+        )
+        .then(subscription => {
+            return push_sendSubscriptionToServer(subscription, 'POST');
+        })
+        .then(subscription => {
+            isPushEnabled = true;
+        })
+        .catch(e => {
+            if (Notification.permission === 'denied') {
+                console.warn('Notifications are denied by the user.');
+            } else {
+                console.error('Impossible to subscribe to push notifications', e);
+            }
+        });
+}
+        </code></pre>
+
+            Die <i><b>push_subscribe</b></i>-Methode fragt daraufhin über die <i><b>checkNotificationPermission</b></i>-Methode ab, ob Push-Benachrichtigungen
+            vom Nutzer erlaubt/aktiviert worden sind.
+            Sind diese aktiviert worden, so wird der <i><b>applicationServerKey</b></i> über die <i><b>urlBase64ToUint8Array</b></i>-Methode erzeugt,
+            um damit die Unterstützung von Chrome zu garantieren.
+
+            <pre><code class="language-javascript">
+function push_sendSubscriptionToServer(subscription, method) {
+    const key = subscription.getKey('p256dh');
+    const token = subscription.getKey('auth');
+
+    return fetch('http://localhost/people/push_subscription', {
+        method,
+        mode: "same-origin",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "endpoint": subscription.endpoint,
+            "publicKey": key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
+            "authToken": token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
+        }),
+    });
+}
+        </code></pre>
+
+            Als Letztes wird das Abonnement mit allen gegebenen Parametern (<i><b>publicKey,</b></i>
+            <i><b>authToken und</b></i> <i><b>endpoint</b></i>) mit Hilfe der
+            <i><b>push_sendSubscriptionToServer</b></i>-Methode als JSON durch die Verwendung von <i><b>fetch</b></i> an den Server gesendet.
+            Die Methode <i><b>push_unsubscribe</b></i> der app.js-Datei macht das Abonnement rückgängig.
+
+            <br>
+            <br>
+            <h4>ServiceWorker:</h4>
+            Da nun der Push der Nachrichten fertiggestellt ist, besteht jetzt lediglich noch das Erfordernis,
+            die Nachrichten über den ServiceWorker zu erstellen und danach auf dem Bildschirm des Nutzers auszugeben.
+            Dafür wird der ServiceWorker um 2 Funktionen erweitert.
+            Der ServiceWorker horcht mit Hilfe eines <i><b>push</b></i>-EventListener auf einen Push, erstellt daraufhin die Nachricht und
+            zeigt diese über die Funktion <i><b>showNotification</b></i> an.
+
+            <pre><code class="language-javascript">
+self.addEventListener('push', event => {
+    if (!(self.Notification && self.Notification.permission === 'granted')){
+        return;
+    }
+
+    const sendNotification = (body) => {
+        var data = JSON.parse(body);
+
+        const title = data.title;
+
+        return self.registration.showNotification(title, {
+            body: data.body,
+            icon: data.icon,
+            badge: data.badge,
+            image: data.image,
+            data: {
+                url: data.url
+            }
+        });
+    };
+
+    if (event.data) {
+        const message = event.data.text();
+        event.waitUntil(sendNotification(message));
+    }
+})
+        </code></pre>
+        <br>
+
+            Die zweite Funktion, die im ServiceWorker implementiert werden muss, wird ausgelöst, wenn der Nutzer auf den Banner der Push-Nachricht klickt.
+            Dabei wird das <i><b>notificationclick</b></i>-Event ausgelöst, welches im Beispiel beinhaltet, dass die Webseite aufgerufen wird.
+
+            <pre><code class="language-javascript">
+self.addEventListener('notificationclick', event => {
+    console.log(('[Service Worker] Notification click received.'));
+    event.notification.close();
+    event.waitUntil(clients.openWindow(event.notification.data.url));
+})
+        </code></pre>
+
+            <br>
+            <br>
+            <a href="https://github.com/Erdmanny/pwa_1" class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+
+            <div class="float-right">
+                <a href="pwa2.html" class="btn btn-secondary">Read-Only PWA
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-forward-fill" viewBox="0 0 16 16">
+                        <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
+                    </svg>
+                </a>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
